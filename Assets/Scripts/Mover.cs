@@ -6,13 +6,13 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] private float _speed = 2.0f;
 
-    private Rigidbody2D _rigidbody;
+    private int _walkHash = Animator.StringToHash("Walk");
     private SpriteRenderer _sprite;
     private Animator _animator;
+    private float _idleSpeed = 0f;
 
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
         _sprite = GetComponentInChildren<SpriteRenderer>();
         _animator = GetComponentInChildren<Animator>();
     }
@@ -23,17 +23,17 @@ public class Mover : MonoBehaviour
         {
             transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
             _sprite.flipX= true;
-            _animator.SetFloat("Walk", 1);
+            _animator.SetFloat(_walkHash, _speed);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(_speed * Time.deltaTime, 0, 0);
             _sprite.flipX = false;
-            _animator.SetFloat("Walk", 1);
+            _animator.SetFloat(_walkHash, _speed);
         }
         else
         {
-            _animator.SetFloat("Walk", 0);
+            _animator.SetFloat(_walkHash, _idleSpeed);
         }
     }
 }

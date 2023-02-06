@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 167430569}
   m_Layer: 0
-  m_Name: AlarmTrigger
+  m_Name: Home
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2662,8 +2662,9 @@ GameObject:
   - component: {fileID: 2002853160}
   - component: {fileID: 2002853162}
   - component: {fileID: 2002853159}
-  - component: {fileID: 2002853161}
   - component: {fileID: 2002853163}
+  - component: {fileID: 2002853166}
+  - component: {fileID: 2002853165}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -2758,21 +2759,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2002853161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002853157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b9be41dcea6c394ead1a6049d95c56f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _alarmed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!61 &2002853162
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2895,3 +2881,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2002853165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002853157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9be41dcea6c394ead1a6049d95c56f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _home: {fileID: 2002853166}
+--- !u!114 &2002853166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002853157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e7ded18ce086d4ca090a95ce6f0c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
