@@ -16,7 +16,6 @@ public class Alarm : MonoBehaviour
     private float _changeRate = 0.5f;
     private int _alarmHash = Animator.StringToHash("Alarm");
 
-
     private void Start()
     {
         _animator = GetComponent<Animator>();
