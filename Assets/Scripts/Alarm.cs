@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 
 public class Alarm : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public class Alarm : MonoBehaviour
     private Coroutine _coroutine;
     private Animator _animator;
     private AudioSource _audio;
-    private float _minVolume = 0f;
-    private float _maxVolume = 1f;
     private float _changeRate = 0.5f;
     private int _alarmHash = Animator.StringToHash("Alarm");
+
+    private void OnEnable() => _home.AlarmChanged += OnAlarmChanged;
+
+    private void OnDisable() => _home.AlarmChanged -= OnAlarmChanged;
 
     private void Start()
     {
@@ -22,54 +25,26 @@ public class Alarm : MonoBehaviour
         _audio = GetComponent<AudioSource>();
     }
 
-    private void OnEnable()
-    {
-        _home.AlarmChanged += Alarmed;
-    }
-
-    private void OnDisable()
-    {
-        _home.AlarmChanged -= Alarmed;
-    }
-
-    public void Alarmed(bool alarm)
+    public void OnAlarmChanged(bool isAlarm, float targetVolume)
     {
         if (_coroutine != null)
-        {
             StopCoroutine(_coroutine);
-        }
 
-        _coroutine = StartCoroutine(AlarmState(alarm));
+        _coroutine = StartCoroutine(ChangeValue(isAlarm, targetVolume));
     }
 
-    private IEnumerator AlarmState(bool alarm)
+    private IEnumerator ChangeValue(bool isAlarm, float targetVolume)
     {
-        if (alarm && _audio.volume < _maxVolume)
+        if (isAlarm)
+            _animator.SetBool(_alarmHash, isAlarm);
+
+        while (_audio.volume != targetVolume)
         {
-            if (!_audio.isPlaying)
-            {
-                _audio.Play();
-                _animator.SetBool(_alarmHash, true);
-            }
+            _audio.volume = Mathf.MoveTowards(_audio.volume, targetVolume, _changeRate * Time.deltaTime);
 
-            while (_audio.volume < _maxVolume)
-            {
-                _audio.volume = Mathf.MoveTowards(_audio.volume, _maxVolume, _changeRate * Time.deltaTime);
-
-                yield return null;
-            }
+            yield return null;
         }
-        else if (!alarm && _audio.volume > _minVolume)
-        {
-            while (_audio.volume > _minVolume)
-            {
-                _audio.volume = Mathf.MoveTowards(_audio.volume, _minVolume, _changeRate * Time.deltaTime);
 
-                yield return null;
-            }
-
-            _animator.SetBool(_alarmHash, false);
-            _audio.Stop();
-        }
+        _animator.SetBool(_alarmHash, isAlarm);
     }
 }
